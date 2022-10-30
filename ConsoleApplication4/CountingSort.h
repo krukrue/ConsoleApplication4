@@ -7,7 +7,7 @@ using namespace std;
 template<typename T> //template for ComparisonCountingSort
 class CountingSort {
 public: 
-	vector<T> intVector;
+	vector<T> InputVector;
 	vector<int> counter;
 	vector<T> sum;
 	int max;
@@ -24,7 +24,7 @@ public:
 template<typename T>
 void CountingSort<T>::InitVector(vector<T> vect)
 {
-	intVector = vect;
+	InputVector = vect;
 	counter.clear();             // clear vector 
 	max = *max_element(vect.begin(), vect.end());
 	for (int i = 0; i < max + 1; i++) {
@@ -36,10 +36,10 @@ void CountingSort<T>::InitVector(vector<T> vect)
 inline vector<int> CountingSort<int>::DistributionCountingSort(vector<int> temp)
 {
 	InitVector(temp);
-	vector<int> sum(intVector.size());
+	vector<int> sum(InputVector.size());
 
-	for (int i = 0; i < intVector.size(); i++) { // compure frequience
-		int j = intVector[i];
+	for (int i = 0; i < InputVector.size(); i++) { // compure frequience
+		int j = InputVector[i];
 		counter[j] = counter[j] + 1;
 	}
 	for (int i = 1; i < max + 1; i++) { // reuse for distribution
@@ -47,10 +47,10 @@ inline vector<int> CountingSort<int>::DistributionCountingSort(vector<int> temp)
 	}
 
 
-	for (int i = intVector.size() - 1; i > -1; i--) { // compare and final result
-		int j = intVector[i];
+	for (int i = InputVector.size() - 1; i > -1; i--) { // compare and final result
+		int j = InputVector[i];
 		counter[j] = counter[j] - 1;
-		sum[counter[j]] = intVector[i];
+		sum[counter[j]] = InputVector[i];
 	}
 
 
@@ -75,14 +75,14 @@ inline vector<T> CountingSort<T>::ComparisonCountingSort(vector<T> temp)
 	{
 		InitVector(temp);
 		vector<int> count;
-		vector<T> sum(intVector.size());
+		vector<T> sum(InputVector.size());
 
-		for (int i = 0; i < intVector.size(); i++) {
+		for (int i = 0; i < InputVector.size(); i++) {
 			count.push_back(0);
 		}
-		for (int i = 0; i < intVector.size() - 1; i++) {
-			for (int j = i + 1; j < intVector.size(); j++) {
-				if (intVector[i] < intVector[j]) {
+		for (int i = 0; i < InputVector.size() - 1; i++) {
+			for (int j = i + 1; j < InputVector.size(); j++) {
+				if (InputVector[i] < InputVector[j]) {
 					count[j] = count[j] + 1;
 
 				}
@@ -93,7 +93,7 @@ inline vector<T> CountingSort<T>::ComparisonCountingSort(vector<T> temp)
 		}
 
 		for (int i = 0; i < count.size(); i++) {
-			sum[count[i]] = intVector[i];
+			sum[count[i]] = InputVector[i];
 		}
 		printResult(sum);
 
